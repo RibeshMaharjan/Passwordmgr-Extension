@@ -2,25 +2,25 @@
   margin: 0;
   padding: 0;
 }
-
+body {
+  height: 500px;
+  width: 400px;
+}
 .login-signup-bg {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100dvh;
-  min-width: 100dvw;
+  min-height: 100%;
+  min-width: 100%;
   background: url(./images/hero-background.png) no-repeat;
   background-size: cover;
 }
 .login-signup-bg .login-signup-wrapper {
-  min-height: 32rem;
-  min-width: 24rem;
   padding: 25px;
+  min-height: 100%;
+  min-width: 100%;
   box-sizing: border-box;
   text-align: center;
-  border: 1px solid #ffffff;
-  border-radius: 1.2rem;
-  backdrop-filter: blur(5px);
 }
 .login-signup-bg .login-signup-wrapper .heading {
   font-size: 18px;
@@ -65,60 +65,33 @@
   cursor: pointer;
   transform: scale(1.1);
 }
-.login-signup-bg .popup {
-  width: 600px;
-  height: 400px;
-  position: fixed;
-  margin: 0;
-  padding: 3rem;
+.login-signup-bg #user-info #user-info-header{
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.login-signup-bg #user-info {
+  padding: 25px;
+  min-height: 100%;
+  min-width: 100%;
   box-sizing: border-box;
-  background-color: rgba(0, 0, 0, 0.5);
-  background-color: white;
-}
-.login-signup-bg .popup .close-btn {
-  position: absolute;
-  right: 2rem;
-  top: 2rem;
-  cursor: pointer;
-}
-.login-signup-bg .popup .heading {
-  font-size: 18px;
-  color: black;
   text-align: center;
 }
-.login-signup-bg .popup .signup_form {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 3rem;
+.login-signup-bg #user-info p {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 24px;
 }
-.login-signup-bg .popup .signup_form .input {
-  height: 3.5rem;
-  width: 100%;
-  padding: 0.3rem;
-  padding-inline: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-sizing: border-box;
-  font-size: 1.2rem;
-  border: 1px solid black;
-  border-radius: 0.5rem;
-}
-.login-signup-bg .popup .signup_form button {
-  padding: 1rem;
-  margin-top: 1.5rem;
-  height: 3.5rem;
-  width: 10rem;
-  position: absolute;
-  right: 3rem;
-  bottom: 2rem;
-  font-size: large;
-  box-sizing: border-box;
-  border: 1px solid black;
-  outline: none;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-}
-.login-signup-bg .popup .signup_form button:hover {
+
+.login-signup-bg #user-info .pass-mgr-button {
+  min-width: max-content;
+  max-width: max-content;
+  padding: 0.3rem 1rem;
+  border: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 3px;
+  background-color: #008080;
   cursor: pointer;
-  transform: scale(1.1);
 }
