@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="login-signup-bg">
-      <div class="login-signup-wrapper">
+      <div class="login-signup-wrapper" id="login-wrapper">
         <div class="heading">
           <h1>Password Manager</h1>
         </div>
@@ -41,6 +41,11 @@
             <button type="submit" name="login" id="login-btn">Login</button>
         </div>
       </div>
+      <!-- User Info & Logout -->
+      <div id="user-info">
+       <p id="user-info-header">Welcome, <span id="username"></span>!</p>
+       <button class="pass-mgr-button" id="logout-btn">Logout</button>
+     </div>
     </div>
     <script src="pop.js"></script>
   </body>

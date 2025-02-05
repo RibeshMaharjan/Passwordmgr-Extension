@@ -1,6 +1,6 @@
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   
-  if (tab.url && (tab.url.includes("login") || tab.url.includes("signin"))) {
+  if (message.type === "DETECT_LOGIN_FORM") {
     chrome.storage.local.get("token", async (data) => {
       if (!data.token) return; // User not logged in
 
@@ -12,6 +12,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             headers: { Authorization: `Bearer ${data.token}` },
           }
         );
+
         let result = await response.json();
         if (result.success) {
           chrome.storage.local.set({ passwords: result.passwords });
@@ -21,8 +22,16 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       }
     });
 
-    chrome.tabs.sendMessage(tabId, {
+    chrome.runtime.sendMessage({
       type: "LOGIN",
     });
+  }
+
+  if (message.type === "FETCH_CREDENTIALS") {
+    chrome.storage.local.get(["passwords"], (data) => {
+      sendResponse({ passwords: data.passwords || [] });
+    });
+
+    return true; // Required for async response
   }
 });
