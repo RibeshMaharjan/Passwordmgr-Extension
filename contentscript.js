@@ -79,6 +79,9 @@
     let passwordField = document.querySelector("input[type='password']");
     if (passwordField) {
       console.log("Login form detected!");
+      chrome.runtime.sendMessage({ type: "TEST" }, (response) => {
+        console.log(response);
+      });
       chrome.runtime.sendMessage({ type: "DETECT_LOGIN_FORM" });
     }
   }

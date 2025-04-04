@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       console.log("Send req")
       
-      let response = await fetch("http://localhost:81/Password-Mgr/app/api/login.php", {
+      let response = await fetch("http://localhost/Password-Mgr/app/api/login.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
