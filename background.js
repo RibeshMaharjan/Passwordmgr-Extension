@@ -2,50 +2,71 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "TEST") {
     sendResponse({ status: "Background is running" });
   }
-  console.log("Background is running");
-  
 
   if (message.type === "DETECT_LOGIN_FORM") {
-    console.log("Background is running form");
-    
-    chrome.storage.local.get("token", async (data) => {
-      console.log("fetching data");
-      if (!data.token) return; // User not logged in
-      console.log("fetching data");
-      
-      try {
-        let response = await fetch(
-          "http://localhost/Password-Mgr/app/api/getPassword.php",
-          {
-            method: "GET",
-            headers: { Authorization: `Bearer ${data.token}` },
-          }
-        );
-
-        console.log(await response);
-        
-        let result = await response.json();
-        console.log(result); // Log the result
-        console.log(result.passwords);
-        
-        if (result.success) {
-          chrome.storage.local.set({ passwords: result.passwords });
-        }
-      } catch (error) {
-        console.log("Failed to fetch passwords:", error);
-      }
-    });
-
-    chrome.runtime.sendMessage({
-      type: "LOGIN",
-    });
+    handleLoginFormDetection();
   }
 
   if (message.type === "FETCH_CREDENTIALS") {
-    chrome.storage.local.get(["passwords"], (data) => {
-      sendResponse({ passwords: data.passwords || [] });
-    });
-
+    handleCredentialsFetch(sendResponse);
     return true; // Required for async response
   }
 });
+
+async function handleLoginFormDetection() {
+  try {
+    const data = await chrome.storage.local.get("token");
+    if (!data.token) return; // User not logged in
+
+    await fetchPasswords(data.token);
+    chrome.runtime.sendMessage({ type: "LOGIN" });
+  } catch (error) {
+    console.error("Error in login form detection:", error);
+  }
+}
+
+async function handleCredentialsFetch(sendResponse) {
+  try {
+    const data = await chrome.storage.local.get(["passwords", "token"]);
+    
+    if (data.token) {
+      await fetchPasswords(data.token);
+      const updatedData = await chrome.storage.local.get("passwords");
+      sendResponse({ passwords: updatedData.passwords || [] });
+    } else {
+      sendResponse({ passwords: [] });
+    }
+  } catch (error) {
+    console.error("Error fetching credentials:", error);
+    sendResponse({ passwords: [], error: "Failed to fetch credentials" });
+  }
+}
+
+async function fetchPasswords(token) {
+  try {
+    const response = await fetch(
+      "http://localhost/Password-Mgr/public/api/getPassword.php",
+      {
+        method: "GET",
+        headers: { 
+          Authorization: `Bearer ${token}`
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    
+    if (result.success) {
+      await chrome.storage.local.set({ passwords: result.passwords });
+    } else {
+      throw new Error("Failed to fetch passwords: " + (result.message || "Unknown error"));
+    }
+  } catch (error) {
+    console.error("Password fetch error:", error);
+    throw error;
+  }
+}
