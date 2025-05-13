@@ -62,11 +62,13 @@
         let site = window.location.hostname;
         let parts = site.split(".");
         site = parts.slice(-2).join(".");
-        console.log("Current site:", site);
-        
-        let matchingEntries = response.passwords.filter(entry => entry.site_url === site);
-        console.log("Found credentials:", matchingEntries.length);
-        
+
+        let matchingEntries = response.passwords.filter(entry => {
+            let parts = entry.site_url.split("://");
+            let filterSite = parts.slice(-1);
+            return filterSite[0] === site;
+        });
+
         if(matchingEntries && matchingEntries.length > 0) {
             // Position dropdown next to the clicked field
             const targetField = fieldType === 'password' ? passwordField : usernameField;
