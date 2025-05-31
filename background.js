@@ -18,7 +18,7 @@ async function handleLoginFormDetection() {
     const data = await chrome.storage.local.get("token");
     if (!data.token) return; // User not logged in
 
-    // await fetchPasswords(data.token);
+    await fetchPasswords(data.token);
     chrome.runtime.sendMessage({ type: "LOGIN" });
   } catch (error) {
     console.error("Error in login form detection:", error);

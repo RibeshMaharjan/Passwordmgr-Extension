@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const usernameSpan = document.getElementById("username");
 
   // Buttons
-  const logoutBtn = document.getElementById("logout-btn");
+  const logoutBtn = document.querySelectorAll("#logout-btn");
   const loginBtn = document.getElementById("login-btn");
   const verifyBtn = document.getElementById("verify-btn");
   const resendCodeLink = document.getElementById("resend-code");
@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Improved logout handling
-  logoutBtn.addEventListener("click", async () => {
+  logoutBtn.forEach(btn => btn.addEventListener("click", async () => {
     setLoadingState(true, "logout");
     try {
       // Clear all authentication data
@@ -215,7 +215,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       setLoadingState(false, "logout");
     }
-  });
+   })
+  );
 
   // Handle registration link click
   document.querySelector('a[href*="signup.php"]').addEventListener('click', (e) => {
@@ -301,13 +302,11 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
 
       case "logout":
-        logoutBtn.disabled = isLoading;
+        logoutBtn.forEach(btn => btn.disabled = isLoading);
         if (isLoading) {
-          logoutBtn.textContent = "Logging out...";
-          logoutBtn.style.opacity = "0.7";
+          logoutBtn.forEach(btn => btn.textContent = "Logging out...");
         } else {
-          logoutBtn.textContent = "Logout";
-          logoutBtn.style.opacity = "1";
+          logoutBtn.forEach(btn => btn.textContent = "Logout");
         }
         break;
 
@@ -315,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Disable all buttons as fallback
         loginBtn.disabled = isLoading;
         verifyBtn.disabled = isLoading;
-        logoutBtn.disabled = isLoading;
+        logoutBtn.forEach(btn => btn.disabled = isLoading);
     }
   }
 

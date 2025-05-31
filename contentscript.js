@@ -61,12 +61,12 @@
 
         let site = window.location.hostname;
         let parts = site.split(".");
-        site = parts.slice(-2).join(".");
+        site = parts[parts.indexOf("com") - 1];
 
         let matchingEntries = response.passwords.filter(entry => {
-            let parts = entry.site_url.split("://");
-            let filterSite = parts.slice(-1);
-            return filterSite[0] === site;
+            let parts = entry.site_url.split(".");
+            let filterSite = parts[parts.indexOf("com") - 1];
+            return filterSite === site;
         });
 
         if(matchingEntries && matchingEntries.length > 0) {
