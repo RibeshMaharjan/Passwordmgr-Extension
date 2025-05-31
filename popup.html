@@ -13,14 +13,16 @@
     </div>
 
     <div class="login-signup-bg">
-      <div class="login-signup-wrapper" id="login-wrapper">
+      <!-- Login Form -->
+      <div class="login-signup-wrapper" id="login-wrapper" style="display: none;">
         <div class="heading">
-          <h1>Password Manager</h1>
+          <h1>KeyNest</h1>
+          <p style="color: #718096; margin-top: 2px;">Sign in to your account</p>
         </div>
         <div class="form">
             <!-- Username Input -->
             <input
-              type="uname"
+              type="text"
               class="input"
               name="uname"
               placeholder="Username"
@@ -46,11 +48,41 @@
             <button type="submit" name="login" id="login-btn">Login</button>
         </div>
       </div>
+
+      <!-- OTP Verification Form -->
+      <div class="login-signup-wrapper" id="otp-wrapper" style="display: none;">
+        <div class="heading">
+          <h1>KeyNest</h1>
+          <p style="color: #718096; margin-top: 2px;">Verify Your Identity</p>
+        </div>
+        <div class="form" id="otp-form">
+            <!-- OTP Input -->
+            <input
+              type="text"
+              class="input"
+              name="otp_code"
+              placeholder="OTP Code"
+              id="otp_code"
+            /><br />
+            <!-- Resend Code -->
+            <span
+              >Didn't get the code?&nbsp;<a
+                href="#"
+                id="resend-code"
+                >Resend code</a
+              ></span
+            ><br />
+            <!-- Verify Button -->
+            <button type="submit" name="verify" id="verify-btn">Verify Code</button>
+        </div>
+        <button class="pass-mgr-button" id="logout-btn">Logout</button>
+      </div>
+
       <!-- User Info & Logout -->
-      <div id="user-info">
-       <p id="user-info-header">Welcome, <span id="username"></span>!</p>
-       <button class="pass-mgr-button" id="logout-btn">Logout</button>
-     </div>
+      <div id="user-info" style="display: none;">
+        <p id="user-info-header">Welcome, <span id="username"></span>!</p>
+        <button class="pass-mgr-button" id="logout-btn">Logout</button>
+      </div>
     </div>
     <script src="pop.js"></script>
   </body>
